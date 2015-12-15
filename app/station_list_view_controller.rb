@@ -9,8 +9,9 @@ class StationListViewController < UIViewController
     @table.delegate = @table.dataSource = self
     setAutomaticallyAdjustsScrollViewInsets(false)
 
-    @stations = CTAInfo.stations.keys.sort
-    generate_station_groups(@stations)
+    @numbers = ('0'..'9')
+    # calling sort puts numbers at the top, so we have to partition, then sort, then flatten to replicate the ios default sort
+    @stations = CTAInfo.stations.keys.partition { |name| !@numbers.include?(name[0]) }.map(&:sort).flatten
     @reuse = 'StationCell'
     navigationItem.setTitle('Stations')
 
@@ -20,6 +21,7 @@ class StationListViewController < UIViewController
     button = UIBarButtonItem.alloc.initWithTitle('Alerts', style: UIBarButtonItemStylePlain,
       target: self, action: 'alerts:')
     navigationItem.setRightBarButtonItem(button, animated: false)
+    generate_station_groups(@stations)
   end
 
   def viewWillAppear(animated)
@@ -84,6 +86,10 @@ class StationListViewController < UIViewController
     navigationController.pushViewController(train_list, animated: true)
   end
 
+  def tableView(table, titleForHeaderInSection: section)
+    @section_titles[section]
+  end
+
   def sectionIndexTitlesForTableView(table)
     @section_titles
   end
@@ -99,7 +105,11 @@ class StationListViewController < UIViewController
   private
 
   def generate_station_groups(list)
-    groups = list.group_by { |name| name[0].upcase }
+    groups = list.group_by do |name|
+      char = name[0].upcase
+      @numbers.include?(char) ? '#' : char
+    end
+
     @section_titles = groups.keys
     @filtered = groups.values
   end
