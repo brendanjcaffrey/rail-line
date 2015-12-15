@@ -9,14 +9,13 @@ class StationListViewController < UIViewController
     @table.delegate = @table.dataSource = self
     setAutomaticallyAdjustsScrollViewInsets(false)
 
-    @filtered = @stations = CTAInfo.stations.keys.sort
+    @stations = CTAInfo.stations.keys.sort
+    generate_station_groups(@stations)
     @reuse = 'StationCell'
     navigationItem.setTitle('Stations')
 
-    @search = UISearchBar.alloc.initWithFrame(CGRectMake(0, 0, 320, 44))
+    @search = @layout.search
     @search.delegate = self
-    @search.placeholder = 'Search'
-    @table.tableHeaderView = @search
 
     button = UIBarButtonItem.alloc.initWithTitle('Alerts', style: UIBarButtonItemStylePlain,
       target: self, action: 'alerts:')
@@ -46,24 +45,25 @@ class StationListViewController < UIViewController
 
   def searchBar(search, textDidChange: text)
     if text == ''
-      @filtered = @stations
+      filtered = @stations
     else
       split = text.downcase.split(' ')
-      @filtered = @stations.select do |station|
+      filtered = @stations.select do |station|
         split.all? { |word| station.downcase.include?(word) }
       end
     end
 
+    generate_station_groups(filtered)
     @table.reloadData
   end
 
   def numberOfSectionsInTableView(table)
-    1
+    return 0 if Motion::LaunchImages.taking?
+    @filtered.count
   end
 
   def tableView(table, numberOfRowsInSection: section)
-    return 0 if Motion::LaunchImages.taking?
-    @filtered.count
+    @filtered[section].count
   end
 
   def tableView(table, cellForRowAtIndexPath: path)
@@ -75,16 +75,32 @@ class StationListViewController < UIViewController
       cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
     end
 
-    cell.textLabel.text = @filtered[path.row]
+    cell.textLabel.text = @filtered[path.section][path.row]
     cell
   end
 
   def tableView(table, didSelectRowAtIndexPath: path)
-    train_list = ETAListViewController.alloc.init_with_stop_name(@filtered[path.row])
+    train_list = ETAListViewController.alloc.init_with_stop_name(@filtered[path.section][path.row])
     navigationController.pushViewController(train_list, animated: true)
+  end
+
+  def sectionIndexTitlesForTableView(table)
+    @section_titles
+  end
+
+  def sectionForSectionIndexTitle(table, sectionForSectionIndexTitle: title)
+    @section_titles.index(title)
   end
 
   def alerts(sender)
     navigationController.pushViewController(AlertListViewController.alloc.init, animated: true)
+  end
+
+  private
+
+  def generate_station_groups(list)
+    groups = list.group_by { |name| name[0].upcase }
+    @section_titles = groups.keys
+    @filtered = groups.values
   end
 end
