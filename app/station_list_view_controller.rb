@@ -58,6 +58,7 @@ class StationListViewController < UIViewController
   end
 
   def tableView(table, numberOfRowsInSection: section)
+    return 0 if Motion::LaunchImages.taking?
     @filtered.count
   end
 

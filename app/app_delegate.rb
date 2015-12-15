@@ -9,6 +9,8 @@ class AppDelegate
     @window.rootViewController = navigationController
     @window.makeKeyAndVisible
 
+    Motion::LaunchImages.take!
+
     true
   end
 end
