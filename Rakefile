@@ -11,4 +11,5 @@ end
 Motion::Project::App.setup do |app|
   app.name = 'Rail Line'
   app.info_plist['NSAppTransportSecurity'] = { 'NSAllowsArbitraryLoads' => true }
+  app.frameworks << 'SafariServices'
 end

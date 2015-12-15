@@ -17,6 +17,10 @@ class StationListViewController < UIViewController
     @search.delegate = self
     @search.placeholder = 'Search'
     @table.tableHeaderView = @search
+
+    button = UIBarButtonItem.alloc.initWithTitle('Alerts', style: UIBarButtonItemStylePlain,
+      target: self, action: 'alerts:')
+    navigationItem.setRightBarButtonItem(button, animated: false)
   end
 
   def viewWillAppear(animated)
@@ -78,5 +82,9 @@ class StationListViewController < UIViewController
   def tableView(table, didSelectRowAtIndexPath: path)
     train_list = ETAListViewController.alloc.init_with_stop_name(@filtered[path.row])
     navigationController.pushViewController(train_list, animated: true)
+  end
+
+  def alerts(sender)
+    navigationController.pushViewController(AlertListViewController.alloc.init, animated: true)
   end
 end

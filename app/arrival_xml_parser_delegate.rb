@@ -15,7 +15,7 @@ class ArrivalXMLParserDelegate
     end
   end
 
-  def parser(parser, foundCharacters:string)
+  def parser(parser, foundCharacters: string)
     case @last
     when 'destNm'
       @eta.dest_append(string)

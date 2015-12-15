@@ -27,6 +27,7 @@ class ETAListViewController < UIViewController
     @refresh.addTarget(self, action: 'refresh:', forControlEvents: UIControlEventValueChanged)
     table_vc.refreshControl = @refresh
 
+    @first_load = true
     refresh(nil)
     Dispatch::Queue.main.async { @layout.update_constraint(self) }
   end
@@ -46,6 +47,7 @@ class ETAListViewController < UIViewController
       end
 
       Dispatch::Queue.main.async do
+        @first_load = false
         UIApplication.sharedApplication.networkActivityIndicatorVisible = false
         @refresh.endRefreshing
         @table.reloadData
@@ -58,13 +60,14 @@ class ETAListViewController < UIViewController
   end
 
   def tableView(table, numberOfRowsInSection: section)
+    return 0 if @first_load
     [1, @etas.count].max
   end
 
   def tableView(table, cellForRowAtIndexPath: path)
     if @etas.count == 0
       cell = table.dequeueReusableCellWithIdentifier(@empty_reuse)
-      cell = UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: @empty_reuse)
+      cell = UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: @empty_reuse) if cell.nil?
       cell.textLabel.text = 'No upcoming arrivals'
     else
       cell = table.dequeueReusableCellWithIdentifier(@reuse)
