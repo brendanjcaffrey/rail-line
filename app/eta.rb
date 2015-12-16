@@ -2,7 +2,7 @@ class ETA
   attr_reader :arrival
 
   def <=>(other)
-    @arrival.<=>(other.arrival)
+    time.<=>(other.time)
   end
 
   def initialize
