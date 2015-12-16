@@ -32,6 +32,17 @@ class ETAListViewController < UIViewController
     Dispatch::Queue.main.async { @layout.update_constraint(self) }
   end
 
+  def viewDidAppear(animated)
+    @notification = NSNotificationCenter.defaultCenter.addObserverForName(
+      UIApplicationWillEnterForegroundNotification, object: nil,
+      queue: NSOperationQueue.mainQueue, usingBlock: ->(_) { refresh(nil) })
+  end
+
+  def viewWillDisappear(animated)
+    NSNotificationCenter.defaultCenter.removeObserver(@notification) if @notification
+    @notification = nil
+  end
+
   def refresh(sender)
     UIApplication.sharedApplication.networkActivityIndicatorVisible = true
 
