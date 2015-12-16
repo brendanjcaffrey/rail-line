@@ -3,11 +3,8 @@ class ETACellLayout < MK::Layout
   @@color_spacing = 1
   @@color_height = @@cell_height - @@color_spacing
   @@color_width = 20
-  @@half_color_width = @@color_width / 2.0
   @@spacing = 8
-  @@font_size = 28
-  @@time_percent_width = 0.40
-  @@destination_percent_width = 1.0 - @@time_percent_width
+  @@font_size = 24
 
   view :color, :destination, :time
 
@@ -28,6 +25,7 @@ class ETACellLayout < MK::Layout
       top.equals(0)
       width.equals(@@color_width)
       height.equals(@@color_height)
+      left.equals(:superview).priority(1000)
     end
   end
 
@@ -37,8 +35,7 @@ class ETACellLayout < MK::Layout
 
     constraints do
       height.equals(@@cell_height)
-      left.equals(:color, :right).plus(@@spacing)
-      width.equals(:superview).times(@@destination_percent_width).minus(@@half_color_width)
+      left.equals(:color, :right).plus(@@spacing).priority(1000)
     end
   end
 
@@ -48,8 +45,8 @@ class ETACellLayout < MK::Layout
 
     constraints do
       height.equals(@@cell_height)
-      right.equals(:superview, :right).minus(@@spacing)
-      width.equals(:superview).times(@@time_percent_width).minus(@@half_color_width)
+      right.equals(:superview, :right).minus(@@spacing).priority(1000)
+      left.equals(:destination, :right)
     end
   end
 end
