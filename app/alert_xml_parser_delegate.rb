@@ -25,6 +25,8 @@ class AlertXMLParserDelegate
       @alert.service_type_append(string)
     when 'ServiceBackColor'
       @alert.color_append(string)
+    when 'EventStart'
+      @alert.event_start_append(string)
     end
   end
 end

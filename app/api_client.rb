@@ -27,6 +27,7 @@ class APIClient
     parser.delegate = delegate
     parser.parse
 
-    delegate.alerts.select { |alert| alert.service_type.include?('Train') }.uniq { |alert| alert.description }
+    delegate.alerts.select { |alert| alert.service_type.include?('Train') }.
+      select { |alert| alert.is_happening_now? }.uniq { |alert| alert.description }
   end
 end
