@@ -10,7 +10,12 @@ end
 
 Motion::Project::App.setup do |app|
   app.name = 'Rail Line'
-  app.info_plist['NSAppTransportSecurity'] = { 'NSAllowsArbitraryLoads' => true }
+
   app.frameworks << 'SafariServices'
+  app.fonts << 'ionicons.ttf'
+
+  # allow the app to load http:// for the CTA API
+  app.info_plist['NSAppTransportSecurity'] = { 'NSAllowsArbitraryLoads' => true }
+
   app.provisioning_profile = './wildcard.mobileprovision'
 end

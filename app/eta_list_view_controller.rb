@@ -20,6 +20,8 @@ class ETAListViewController < UIViewController
     self.automaticallyAdjustsScrollViewInsets = false
     navigationItem.setTitle(@stop_name)
 
+    update_bar_button
+
     table_vc = UITableViewController.alloc.init
     table_vc.tableView = @table
 
@@ -41,6 +43,17 @@ class ETAListViewController < UIViewController
   def viewWillDisappear(animated)
     NSNotificationCenter.defaultCenter.removeObserver(@notification) if @notification
     @notification = nil
+  end
+
+  def update_bar_button
+    icon_name = Settings.is_favorited?(@stop_name) ? :filled_star : :empty_star
+    button = Ionicons.build_bar_button(self, 'star_tapped:', icon_name)
+    navigationItem.setRightBarButtonItem(button, animated: true)
+  end
+
+  def star_tapped(sender)
+    Settings.toggle_favorite(@stop_name)
+    update_bar_button
   end
 
   def refresh(sender)

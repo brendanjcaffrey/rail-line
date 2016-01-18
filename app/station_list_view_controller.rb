@@ -9,6 +9,7 @@ class StationListViewController < UIViewController
     @table.delegate = @table.dataSource = self
     setAutomaticallyAdjustsScrollViewInsets(false)
 
+    @filter_text = ''
     @numbers = ('0'..'9')
     # calling sort puts numbers at the top, so we have to partition, then sort, then flatten to replicate the ios default sort
     @stations = CTAInfo.stations.keys.partition { |name| !@numbers.include?(name[0]) }.map(&:sort).flatten
@@ -21,12 +22,14 @@ class StationListViewController < UIViewController
     button = UIBarButtonItem.alloc.initWithTitle('Alerts', style: UIBarButtonItemStylePlain,
       target: self, action: 'alerts:')
     navigationItem.setRightBarButtonItem(button, animated: false)
-    generate_station_groups(@stations)
   end
 
   def viewWillAppear(animated)
+    generate_station_groups(@stations)
+
     path = @table.indexPathForSelectedRow
     @table.deselectRowAtIndexPath(path, animated: true) if path
+
     super
   end
 
@@ -55,8 +58,8 @@ class StationListViewController < UIViewController
       end
     end
 
+    @filter_text = text
     generate_station_groups(filtered)
-    @table.reloadData
   end
 
   def numberOfSectionsInTableView(table)
@@ -112,5 +115,14 @@ class StationListViewController < UIViewController
 
     @section_titles = groups.keys
     @filtered = groups.values
+
+    # only show favorites when there isn't a search filter
+    favorites = Settings.favorites
+    if @filter_text == '' && !favorites.empty?
+      @section_titles = ['★'] + @section_titles
+      @filtered = [favorites] + @filtered
+    end
+
+    @table.reloadData
   end
 end
