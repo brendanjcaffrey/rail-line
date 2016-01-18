@@ -105,6 +105,12 @@ class StationListViewController < UIViewController
     navigationController.pushViewController(AlertListViewController.alloc.init, animated: true)
   end
 
+  def force_show(stop_name)
+    navigationController.popToRootViewControllerAnimated(false)
+    train_list = ETAListViewController.alloc.init_with_stop_name(stop_name)
+    navigationController.pushViewController(train_list, animated: false)
+  end
+
   private
 
   def generate_station_groups(list)

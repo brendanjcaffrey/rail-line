@@ -22,6 +22,13 @@ class Settings
   end
 
   def self.update_list(list)
+    # update the 3D touch app shortcuts with up to the four stations (reverse so A is at top, Z is at bottom)
+    shortcuts = list[0..3].reverse.map do |item|
+      UIApplicationShortcutItem.alloc.initWithType(item, localizedTitle: item, localizedSubtitle: '',
+        icon: UIApplicationShortcutIcon.iconWithType(UIApplicationShortcutIconTypeFavorite), userInfo: {})
+    end
+    UIApplication.sharedApplication.shortcutItems = shortcuts
+
     NSUserDefaults.standardUserDefaults.setObject(list, forKey: 'favorites')
   end
 end
