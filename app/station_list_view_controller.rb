@@ -22,11 +22,11 @@ class StationListViewController < UIViewController
     button = UIBarButtonItem.alloc.initWithTitle('Alerts', style: UIBarButtonItemStylePlain,
       target: self, action: 'alerts:')
     navigationItem.setRightBarButtonItem(button, animated: false)
+
+    generate_station_groups(@stations)
   end
 
   def viewWillAppear(animated)
-    generate_station_groups(@stations)
-
     path = @table.indexPathForSelectedRow
     @table.deselectRowAtIndexPath(path, animated: true) if path
 
