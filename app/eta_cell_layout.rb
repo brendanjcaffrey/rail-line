@@ -17,7 +17,7 @@ class ETACellLayout < MK::Layout
   end
 
   def cell_style
-    background_color UIColor.whiteColor
+    background_color Colors.white
   end
 
   def color_style

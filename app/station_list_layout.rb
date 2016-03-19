@@ -10,11 +10,12 @@ class StationListLayout < MK::Layout
   end
 
   def root_style
-    background_color UIColor.whiteColor
+    background_color Colors.white
   end
 
   def search_style
     placeholder 'Search'
+    tint_color Colors.cyan
 
     constraints do
       @top_constraint = top.equals(:superview)
@@ -24,6 +25,8 @@ class StationListLayout < MK::Layout
   end
 
   def table_style
+    tint_color Colors.cyan
+
     constraints do
       top.equals(:search, :bottom)
       @bottom_constraint = bottom.equals(:superview)

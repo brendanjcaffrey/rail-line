@@ -10,6 +10,7 @@ end
 
 Motion::Project::App.setup do |app|
   app.name = 'Rail Line'
+  app.icons = ['Icon-60@2x.png', 'Icon-60@3x.png']
 
   app.frameworks << 'SafariServices'
   app.fonts << 'ionicons.ttf'

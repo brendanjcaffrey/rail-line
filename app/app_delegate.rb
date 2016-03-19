@@ -9,6 +9,13 @@ class AppDelegate
     @window.rootViewController = navigation_controller
     @window.makeKeyAndVisible
 
+    UINavigationBar.appearance.tintColor = Colors.cyan # make nav bar buttons cyan
+    UINavigationBar.appearance.titleTextAttributes = {
+      NSForegroundColorAttributeName => Colors.cyan # make nav bar title cyan
+    }
+    # make text color of table section headers cyan
+    UILabel.appearanceWhenContainedInInstancesOfClasses([UITableViewHeaderFooterView]).setTextColor(Colors.cyan)
+
     Motion::LaunchImages.take!
 
     if launch_options && launch_options.has_key?(UIApplicationLaunchOptionsShortcutItemKey)

@@ -9,7 +9,7 @@ class AlertListLayout < MK::Layout
   end
 
   def root_style
-    background_color UIColor.whiteColor
+    background_color Colors.white
   end
 
   def table_style

@@ -25,15 +25,11 @@ module Ionicons
   end
 
   def button_image(icon, font_size)
-    color = UIColor.colorWithRed(0.0, green: 118.0/255.0,
-                                 blue: 255.0/255.0, alpha: 1.0)
-    draw_icon(icon, font_size, color)
+    draw_icon(icon, font_size, Colors.cyan)
   end
 
   def highlighted_button_image(icon, font_size)
-    color = UIColor.colorWithRed(197.0/255.0, green: 222.0/255.0,
-                                 blue: 250.0/255.0, alpha: 1.0)
-    draw_icon(icon, font_size, color)
+    draw_icon(icon, font_size, Colors.faded_cyan)
   end
 
   def draw_icon(icon, size, color)
