@@ -30,7 +30,12 @@ class StationListViewController < UIViewController
     path = @table.indexPathForSelectedRow
     @table.deselectRowAtIndexPath(path, animated: true) if path
 
+    setup_keyboard_listeners
     super
+  end
+
+  def viewWillDisappear(animated)
+    remove_keyboard_listeners
   end
 
   def searchBarTextDidBeginEditing(search)
