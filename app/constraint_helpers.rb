@@ -50,5 +50,6 @@ module ControllerConstraintHelper
 
   def remove_keyboard_listeners
     (@observers || []).each { |obs| NSNotificationCenter.defaultCenter.removeObserver(obs) }
+    @observers = []
   end
 end
