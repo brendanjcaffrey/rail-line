@@ -73,12 +73,8 @@ class AlertListViewController < UIViewController
       cell.selectionStyle = UITableViewCellSelectionStyleNone
     else
       alert = @alerts[path.row]
-      if alert.color.length >= 6
-        red = alert.color[0..1].to_i(16).to_f / 255.0
-        green = alert.color[2..3].to_i(16).to_f / 255.0
-        blue = alert.color[4..5].to_i(16).to_f / 255.0
-        cell.textLabel.color = UIColor.colorWithRed(red, green: green, blue: blue, alpha: 1.0)
-      end
+      service = alert.services.first
+      cell.textLabel.color = service.uicolor if service.color.length >= 6
 
       cell.textLabel.text = alert.description.strip
       cell.selectionStyle = UITableViewCellSelectionStyleDefault

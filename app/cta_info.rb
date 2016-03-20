@@ -1,5 +1,5 @@
 class CTAInfo
-  class << self ; attr_reader :routes, :colors, :light_colors, :stations ; end
+  class << self ; attr_reader :routes, :colors, :stations ; end
 
   @routes = {
     'Red' => 'Red',

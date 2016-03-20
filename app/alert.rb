@@ -1,12 +1,11 @@
 class Alert
-  attr_reader :description, :url, :service_type, :color
+  attr_reader :description, :url, :event_start, :services
 
   def initialize
     @description = ''
     @url = ''
-    @service_type = ''
-    @color = ''
     @event_start = ''
+    @services = []
   end
 
   def description_append(string)
@@ -17,16 +16,12 @@ class Alert
     @url << string
   end
 
-  def service_type_append(string)
-    @service_type << string
-  end
-
-  def color_append(string)
-    @color << string
-  end
-
   def event_start_append(string)
     @event_start << string
+  end
+
+  def add_service(service)
+    @services << service
   end
 
   def is_happening_now?
@@ -41,5 +36,9 @@ class Alert
 
     start = @@formatter.dateFromString(@event_start)
     start <= Time.now
+  end
+
+  def affects_trains?
+    @services.any? { |service| service.type.include?('Train') }
   end
 end
