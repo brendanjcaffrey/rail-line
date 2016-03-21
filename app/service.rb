@@ -20,6 +20,8 @@ class Service
   end
 
   def uicolor
+    return UIColor.blackColor if @color.length < 6
+
     red = @color[0..1].to_i(16).to_f / 255.0
     green = @color[2..3].to_i(16).to_f / 255.0
     blue = @color[4..5].to_i(16).to_f / 255.0

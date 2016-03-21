@@ -23,6 +23,9 @@ class AlertListViewController < UIViewController
     @first_load = true
     refresh(nil)
     Dispatch::Queue.main.async { @layout.update_constraint(self) }
+
+    @normal_font = UIFont.systemFontOfSize(UIFont.systemFontSize)
+    @small_font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize)
   end
 
   def viewWillAppear(animated)
@@ -69,17 +72,22 @@ class AlertListViewController < UIViewController
     cell.textLabel.color = UIColor.blackColor
 
     if @alerts.count == 0
-      cell.textLabel.text = 'No alerts'
+      text = mutable_attr_string('No alerts')
       cell.selectionStyle = UITableViewCellSelectionStyleNone
     else
       alert = @alerts[path.row]
-      service = alert.services.first
-      cell.textLabel.color = service.uicolor if service.color.length >= 6
+      text = mutable_attr_string(alert.description.strip)
+      text.appendAttributedString(attr_string("\n\nAffects:"))
 
-      cell.textLabel.text = alert.description.strip
+      alert.services.each_with_index do |service, index|
+        text.appendAttributedString(attr_string(connector_text(index, alert.services.size)))
+        text.appendAttributedString(attr_string(service.name, service.uicolor))
+      end
+
       cell.selectionStyle = UITableViewCellSelectionStyleDefault
     end
 
+    cell.textLabel.attributedText = text
     cell
   end
 
@@ -87,5 +95,27 @@ class AlertListViewController < UIViewController
     url = NSURL.URLWithString(@alerts[path.row].url)
     safari = SFSafariViewController.alloc.initWithURL(url)
     presentViewController(safari, animated: true, completion: nil)
+  end
+
+  private
+
+  def attr_string(text, color = UIColor.blackColor)
+    NSAttributedString.alloc.initWithString(text, attributes: {
+      NSForegroundColorAttributeName => color,
+      NSFontAttributeName => @small_font
+    })
+  end
+
+  def mutable_attr_string(text)
+    NSMutableAttributedString.alloc.initWithString(text, attributes: {
+      NSForegroundColorAttributeName => UIColor.blackColor,
+      NSFontAttributeName => @normal_font
+    })
+  end
+
+  def connector_text(index, total)
+    return ' ' if index == 0
+    return ' and ' if index == total - 1
+    return ', '
   end
 end
