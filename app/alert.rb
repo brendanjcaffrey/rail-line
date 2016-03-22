@@ -1,10 +1,14 @@
 class Alert
-  attr_reader :description, :url, :event_start, :services
+  attr_reader :description, :url, :start, :end, :services
+
+  @@date_only_length = 8  # YYYYMMDD
+  @@date_time_length = 14 # YYYYMMDD HH:MM
 
   def initialize
     @description = ''
     @url = ''
-    @event_start = ''
+    @start = ''
+    @end = ''
     @services = []
   end
 
@@ -16,29 +20,89 @@ class Alert
     @url << string
   end
 
-  def event_start_append(string)
-    @event_start << string
+  def start_append(string)
+    @start << string
+  end
+
+  def end_append(string)
+    @end << string
   end
 
   def add_service(service)
     @services << service
   end
 
-  def is_happening_now?
-    return false unless @event_start.include?(':')
+  def affects_trains?
+    @services.any? { |service| service.type.include?('Train') }
+  end
 
-    @@formatter ||= begin
+  def start_string
+    convert_to_string(start_nsdate, @start.length, 'Now')
+  end
+
+  def end_string
+    convert_to_string(end_nsdate, @end.length, 'TBD')
+  end
+
+  private
+
+  def start_nsdate
+    @start_nsdate ||= convert_to_nsdate(@start)
+  end
+
+  def end_nsdate
+    @end_nsdate ||= convert_to_nsdate(@end)
+  end
+
+  def convert_to_nsdate(time_str)
+    if time_str.length == @@date_only_length
+      date_only_parser.dateFromString(time_str)
+    elsif time_str.length == @@date_time_length
+      date_time_parser.dateFromString(time_str)
+    else
+      NSDate.date
+    end
+  end
+
+  def convert_to_string(nsdate, str_length, str_for_empty)
+    return date_time_formatter.stringFromDate(nsdate).downcase if str_length == @@date_time_length
+    return date_only_formatter.stringFromDate(nsdate) if str_length == @@date_only_length
+    str_for_empty
+  end
+
+  def date_time_parser
+    @@date_time_parser ||= begin
       formatter = NSDateFormatter.alloc.init
       formatter.dateFormat = 'yyyyMMdd HH:mm'
       formatter.timeZone = NSTimeZone.localTimeZone
       formatter
     end
-
-    start = @@formatter.dateFromString(@event_start)
-    start <= Time.now
   end
 
-  def affects_trains?
-    @services.any? { |service| service.type.include?('Train') }
+  def date_time_formatter
+    @@date_time_formatter ||= begin
+      formatter = NSDateFormatter.alloc.init
+      formatter.dateFormat = 'M/d ha'
+      formatter.timeZone = NSTimeZone.localTimeZone
+      formatter
+    end
+  end
+
+  def date_only_parser
+    @@date_only_parser ||= begin
+      formatter = NSDateFormatter.alloc.init
+      formatter.dateFormat = 'yyyyMMdd'
+      formatter.timeZone = NSTimeZone.localTimeZone
+      formatter
+    end
+  end
+
+  def date_only_formatter
+    @@date_only_formatter ||= begin
+      formatter = NSDateFormatter.alloc.init
+      formatter.dateFormat = 'M/d'
+      formatter.timeZone = NSTimeZone.localTimeZone
+      formatter
+    end
   end
 end

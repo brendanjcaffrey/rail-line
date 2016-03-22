@@ -35,7 +35,9 @@ class AlertXMLParserDelegate
     when 'AlertURL'
       @alert.url_append(string)
     when 'EventStart'
-      @alert.event_start_append(string)
+      @alert.start_append(string)
+    when 'EventEnd'
+      @alert.end_append(string)
     when 'ServiceName'
       @service.name_append(string)
     when 'ServiceTypeDescription'

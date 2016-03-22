@@ -77,7 +77,8 @@ class AlertListViewController < UIViewController
     else
       alert = @alerts[path.row]
       text = mutable_attr_string(alert.description.strip)
-      text.appendAttributedString(attr_string("\n\nAffects:"))
+      text.appendAttributedString(attr_string("\n\nWhen: " + alert.start_string + ' - ' + alert.end_string))
+      text.appendAttributedString(attr_string("\nAffects:"))
 
       alert.services.each_with_index do |service, index|
         text.appendAttributedString(attr_string(connector_text(index, alert.services.size)))
