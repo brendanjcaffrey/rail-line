@@ -7,10 +7,10 @@ class ETACellView < UITableViewCell
   end
 
   def update(eta)
-    @layout.color.backgroundColor = CTAInfo.colors[eta.route]
-    @layout.time.textColor = CTAInfo.colors[eta.route]
+    @layout.color.backgroundColor = Colors.route_colors[eta.route]
+    @layout.time.textColor = Colors.route_colors[eta.route]
     @layout.time.text = eta.time_string
-    @layout.destination.textColor = CTAInfo.colors[eta.route]
+    @layout.destination.textColor = Colors.route_colors[eta.route]
     @layout.destination.text = eta.destination
   end
 end

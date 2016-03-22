@@ -38,7 +38,7 @@ class ETA
   end
 
   def route
-    CTAInfo.routes.has_key?(@route) ? CTAInfo.routes[@route] : @route
+    Colors.routes.has_key?(@route) ? Colors.routes[@route] : @route
   end
 
   def time
