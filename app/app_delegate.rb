@@ -2,6 +2,8 @@ class AppDelegate
   attr_reader :window
 
   def application(application, didFinishLaunchingWithOptions: launch_options)
+    Settings.verify_stations_on_startup
+
     @station_list_view_controller = StationListViewController.alloc.init
     navigation_controller = UINavigationController.alloc.initWithRootViewController(@station_list_view_controller)
 

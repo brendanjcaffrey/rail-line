@@ -13,14 +13,18 @@ class Settings
     if is_favorited?(id)
       update_list(list - [id])
     else
-      update_list((list + [id]).sort)
+      update_list((list + [id]).sort_by { |station_id| CTAInfo.stations[station_id].name })
     end
+  end
+
+  def self.verify_stations_on_startup
+    Settings.update_list(Settings.list.select { |id| CTAInfo.stations.has_key?(id) })
   end
 
   private
 
   def self.list
-    NSUserDefaults.standardUserDefaults.objectForKey(FAVORITES_KEY) || []
+    @list ||= NSUserDefaults.standardUserDefaults.objectForKey(FAVORITES_KEY) || []
   end
 
   def self.update_list(list)
@@ -34,5 +38,6 @@ class Settings
     UIApplication.sharedApplication.shortcutItems = shortcuts
 
     NSUserDefaults.standardUserDefaults.setObject(list, forKey: FAVORITES_KEY)
+    @list = list
   end
 end
