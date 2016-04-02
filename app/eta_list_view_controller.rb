@@ -1,8 +1,8 @@
 class ETAListViewController < UIViewController
   include ControllerConstraintHelper
 
-  def init_with_stop_name(name)
-    @stop_name = name
+  def init_with_station(station)
+    @station = station
     @etas = []
 
     @empty_reuse = 'PlainCell'
@@ -18,7 +18,7 @@ class ETAListViewController < UIViewController
     @table = @layout.table
     @table.delegate = @table.dataSource = self
     self.automaticallyAdjustsScrollViewInsets = false
-    navigationItem.setTitle(@stop_name)
+    navigationItem.setTitle(@station.name)
 
     update_bar_button
 
@@ -46,13 +46,13 @@ class ETAListViewController < UIViewController
   end
 
   def update_bar_button
-    icon_name = Settings.is_favorited?(@stop_name) ? :filled_star : :empty_star
+    icon_name = Settings.is_favorited?(@station.id) ? :filled_star : :empty_star
     button = Ionicons.build_bar_button(self, 'star_tapped:', icon_name)
     navigationItem.setRightBarButtonItem(button, animated: true)
   end
 
   def star_tapped(sender)
-    Settings.toggle_favorite(@stop_name)
+    Settings.toggle_favorite(@station.id)
     update_bar_button
   end
 
@@ -60,7 +60,7 @@ class ETAListViewController < UIViewController
     UIApplication.sharedApplication.networkActivityIndicatorVisible = true
 
     Dispatch::Queue.concurrent.async do
-      @etas = APIClient.get_etas(@stop_name)
+      @etas = APIClient.get_etas(@station.id)
       if @etas.nil?
         alert = UIAlertController.alertControllerWithTitle('Error',
           message: 'Unable to load arrivals, please check your internet connection.',

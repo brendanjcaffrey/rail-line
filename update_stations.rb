@@ -28,7 +28,8 @@ doc.css('row').each do |row|
 end
 
 stations = id_station_map.values.sort_by { |station| station.desc_name }
-new_file = "class CTAInfo
+new_file = "Station = Struct.new(:id, :name)
+class CTAInfo
   class << self ; attr_reader :stations ; end
 
   # last updated #{Time.now.strftime('%m-%d-%Y')}
@@ -37,7 +38,7 @@ new_file = "class CTAInfo
 
 stations.each do |station|
   name = name_counts[station.name] > 1 ? station.desc_name : station.name
-  new_file << "\n    \"#{name}\" => #{station.id},"
+  new_file << "\n    #{station.id} => Station.new(#{station.id}, \"#{name}\"),"
 end
 
 new_file = new_file[0..-2] # remove the trailing comma

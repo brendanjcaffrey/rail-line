@@ -12,7 +12,7 @@ class StationListViewController < UIViewController
     @filter_text = ''
     @numbers = ('0'..'9')
     # calling sort puts numbers at the top, so we have to partition, then sort, then flatten to replicate the ios default sort
-    @stations = CTAInfo.stations.keys.partition { |name| !@numbers.include?(name[0]) }.map(&:sort).flatten
+    @stations = CTAInfo.stations.values.partition { |station| !@numbers.include?(station.name[0]) }.map { |group| group.sort_by!(&:name) }.flatten
     @reuse = 'StationCell'
     navigationItem.setTitle('Stations')
 
@@ -59,7 +59,7 @@ class StationListViewController < UIViewController
     else
       split = text.downcase.split(' ')
       filtered = @stations.select do |station|
-        split.all? { |word| station.downcase.include?(word) }
+        split.all? { |word| station.name.downcase.include?(word) }
       end
     end
 
@@ -85,12 +85,12 @@ class StationListViewController < UIViewController
       cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
     end
 
-    cell.textLabel.text = @filtered[path.section][path.row]
+    cell.textLabel.text = @filtered[path.section][path.row].name
     cell
   end
 
   def tableView(table, didSelectRowAtIndexPath: path)
-    train_list = ETAListViewController.alloc.init_with_stop_name(@filtered[path.section][path.row])
+    train_list = ETAListViewController.alloc.init_with_station(@filtered[path.section][path.row])
     navigationController.pushViewController(train_list, animated: true)
   end
 
@@ -110,17 +110,20 @@ class StationListViewController < UIViewController
     navigationController.pushViewController(AlertListViewController.alloc.init, animated: true)
   end
 
-  def force_show(stop_name)
+  def force_show(stop_id)
+    station = CTAInfo.stations[stop_id.to_i]
+    return unless station
+
     navigationController.popToRootViewControllerAnimated(false)
-    train_list = ETAListViewController.alloc.init_with_stop_name(stop_name)
+    train_list = ETAListViewController.alloc.init_with_station(station)
     navigationController.pushViewController(train_list, animated: false)
   end
 
   private
 
   def generate_station_groups(list)
-    groups = list.group_by do |name|
-      char = name[0].upcase
+    groups = list.group_by do |station|
+      char = station.name[0].upcase
       @numbers.include?(char) ? '#' : char
     end
 
@@ -131,7 +134,7 @@ class StationListViewController < UIViewController
     favorites = Settings.favorites
     if @filter_text == '' && !favorites.empty?
       @section_titles = ['★'] + @section_titles
-      @filtered = [favorites] + @filtered
+      @filtered = [favorites.map { |id| CTAInfo.stations[id] }] + @filtered
     end
 
     @table.reloadData
