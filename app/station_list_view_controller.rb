@@ -11,8 +11,12 @@ class StationListViewController < UIViewController
 
     @filter_text = ''
     @numbers = ('0'..'9')
-    # calling sort puts numbers at the top, so we have to partition, then sort, then flatten to replicate the ios default sort
-    @stations = CTAInfo.stations.values.partition { |station| !@numbers.include?(station.name[0]) }.map { |group| group.sort_by!(&:name) }.flatten
+    # sort puts numbers at the top, so we have to do this to replicate the ios default sort
+    @stations = CTAInfo.stations.values.
+      # split into two groups - not numbers and numbers
+      partition { |station| !@numbers.include?(station.name[0]) }.
+      # sort those groups by name then join together
+      map { |group| group.sort_by!(&:name) }.flatten
     @reuse = 'StationCell'
     navigationItem.setTitle('Stations')
 
@@ -22,14 +26,13 @@ class StationListViewController < UIViewController
     button = UIBarButtonItem.alloc.initWithTitle('Alerts', style: UIBarButtonItemStylePlain,
       target: self, action: 'alerts:')
     navigationItem.setRightBarButtonItem(button, animated: false)
-
-    generate_station_groups(@stations)
   end
 
   def viewWillAppear(animated)
     path = @table.indexPathForSelectedRow
     @table.deselectRowAtIndexPath(path, animated: true) if path
 
+    generate_station_groups
     setup_keyboard_listeners
     super
   end
@@ -54,17 +57,8 @@ class StationListViewController < UIViewController
   end
 
   def searchBar(search, textDidChange: text)
-    if text == ''
-      filtered = @stations
-    else
-      split = text.downcase.split(' ')
-      filtered = @stations.select do |station|
-        split.all? { |word| station.name.downcase.include?(word) }
-      end
-    end
-
     @filter_text = text
-    generate_station_groups(filtered)
+    generate_station_groups
   end
 
   def numberOfSectionsInTableView(table)
@@ -121,8 +115,18 @@ class StationListViewController < UIViewController
 
   private
 
-  def generate_station_groups(list)
-    groups = list.group_by do |station|
+  def generate_station_groups
+    if @filter_text == ''
+      filtered = @stations
+    else
+      split = @filter_text.downcase.split(' ')
+      filtered = @stations.select do |station|
+        # make sure the station name includes all words entered
+        split.all? { |word| station.name.downcase.include?(word) }
+      end
+    end
+
+    groups = filtered.group_by do |station|
       char = station.name[0].upcase
       @numbers.include?(char) ? '#' : char
     end
