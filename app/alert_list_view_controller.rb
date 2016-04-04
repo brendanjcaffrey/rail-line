@@ -72,7 +72,7 @@ class AlertListViewController < UIViewController
     cell.textLabel.color = UIColor.blackColor
 
     if @alerts.count == 0
-      text = mutable_attr_string('No alerts')
+      cell.textLabel.text = 'No alerts'
       cell.selectionStyle = UITableViewCellSelectionStyleNone
     else
       alert = @alerts[path.row]
@@ -85,14 +85,15 @@ class AlertListViewController < UIViewController
         text.appendAttributedString(attr_string(service.name, service.uicolor))
       end
 
+      cell.textLabel.attributedText = text
       cell.selectionStyle = UITableViewCellSelectionStyleDefault
     end
 
-    cell.textLabel.attributedText = text
     cell
   end
 
   def tableView(table, didSelectRowAtIndexPath: path)
+    return if @alerts.nil? || @alerts.count == 0
     url = NSURL.URLWithString(@alerts[path.row].url)
     safari = SFSafariViewController.alloc.initWithURL(url)
     presentViewController(safari, animated: true, completion: nil)
