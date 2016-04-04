@@ -15,6 +15,10 @@ class ETA
 
   def dest_append(string)
     @destination << string
+
+    if @destination == "O'Hare" || @destination == 'Midway'
+      @destination += ' ✈️'
+    end
   end
 
   def rt_append(string)
