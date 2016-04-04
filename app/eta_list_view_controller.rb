@@ -1,9 +1,10 @@
 class ETAListViewController < UIViewController
   include ControllerConstraintHelper
 
-  def init_with_station(station)
+  def init_with_station(station, delegate)
     @station = station
     @etas = []
+    @delegate = WeakRef.new(delegate)
 
     @empty_reuse = 'PlainCell'
     @reuse = 'ETACell'
@@ -54,6 +55,7 @@ class ETAListViewController < UIViewController
   def star_tapped(sender)
     Settings.toggle_favorite(@station.id)
     update_bar_button
+    @delegate.favorites_updated
   end
 
   def refresh(sender)
@@ -100,5 +102,18 @@ class ETAListViewController < UIViewController
     end
 
     cell
+  end
+
+  def previewActionItems
+    if Settings.is_favorited?(@station.id)
+      style = UIPreviewActionStyleDestructive
+      title = 'Remove from Favorites'
+    else
+      style = UIPreviewActionStyleDefault
+      title = 'Add to Favorites'
+    end
+
+    [UIPreviewAction.actionWithTitle(title, style: style,
+      handler: proc { |action, controller| star_tapped(action) })]
   end
 end

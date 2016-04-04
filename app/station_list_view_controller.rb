@@ -17,8 +17,10 @@ class StationListViewController < UIViewController
       partition { |station| !@numbers.include?(station.name[0]) }.
       # sort those groups by name then join together
       map { |group| group.sort_by!(&:name) }.flatten
+
     @reuse = 'StationCell'
     navigationItem.setTitle('Stations')
+    generate_station_groups
 
     @search = @layout.search
     @search.delegate = self
@@ -28,11 +30,20 @@ class StationListViewController < UIViewController
     navigationItem.setRightBarButtonItem(button, animated: false)
   end
 
+  def viewDidLoad
+    super
+
+    if traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable
+      @previewing_context = registerForPreviewingWithDelegate(self, sourceView: self.view)
+    else
+      @previewing_context = nil
+    end
+  end
+
   def viewWillAppear(animated)
     path = @table.indexPathForSelectedRow
     @table.deselectRowAtIndexPath(path, animated: true) if path
 
-    generate_station_groups
     setup_keyboard_listeners
     super
   end
@@ -84,7 +95,8 @@ class StationListViewController < UIViewController
   end
 
   def tableView(table, didSelectRowAtIndexPath: path)
-    train_list = ETAListViewController.alloc.init_with_station(@filtered[path.section][path.row])
+    station = @filtered[path.section][path.row]
+    train_list = ETAListViewController.alloc.init_with_station(station, self)
     navigationController.pushViewController(train_list, animated: true)
   end
 
@@ -100,6 +112,10 @@ class StationListViewController < UIViewController
     @section_titles.index(title)
   end
 
+  def favorites_updated
+    generate_station_groups
+  end
+
   def alerts(sender)
     navigationController.pushViewController(AlertListViewController.alloc.init, animated: true)
   end
@@ -109,8 +125,39 @@ class StationListViewController < UIViewController
     return unless station
 
     navigationController.popToRootViewControllerAnimated(false)
-    train_list = ETAListViewController.alloc.init_with_station(station)
+    train_list = ETAListViewController.alloc.init_with_station(station, self)
     navigationController.pushViewController(train_list, animated: false)
+  end
+
+  def previewingContext(context, viewControllerForLocation: location)
+    return if presentedViewController.is_a?(ETAListViewController)
+
+    position = @layout.table.convertPoint(location, fromView: view)
+    path = @layout.table.indexPathForRowAtPoint(position)
+    return nil unless path
+
+    cell = @layout.table.cellForRowAtIndexPath(path)
+    context.sourceRect = self.view.convertRect(cell.frame, fromView: @layout.table)
+
+    station = @filtered[path.section][path.row]
+    ETAListViewController.alloc.init_with_station(station, self)
+  end
+
+  def previewingContext(context, commitViewController: controller)
+    self.navigationController.showViewController(controller, sender: nil)
+  end
+
+  def traitCollectionDidChange(collection)
+    super
+
+    if traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable
+      return if @previewing_context
+      @previewing_context = registerForPreviewingWithDelegate(self, sourceView: self.view)
+    else
+      return unless @previewing_context
+      unregisterForPreviewingWithContext(@previewing_context)
+      @previewing_context = nil
+    end
   end
 
   private
