@@ -3,6 +3,8 @@ class AlertListViewController < UIViewController
 
   def loadView
     @alerts = []
+    @filtered = []
+    @filter_list = Colors.route_colors.keys
     @reuse = 'AlertCell'
 
     @layout = AlertListLayout.new
@@ -26,6 +28,11 @@ class AlertListViewController < UIViewController
 
     @normal_font = UIFont.systemFontOfSize(UIFont.systemFontSize)
     @small_font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize)
+
+    @filter_vc = AlertFilterViewController.alloc.init_with_delegate(self)
+    button = UIBarButtonItem.alloc.initWithTitle('Filter', style: UIBarButtonItemStylePlain,
+      target: self, action: 'filter:')
+    navigationItem.setRightBarButtonItem(button, animated: false)
   end
 
   def viewWillAppear(animated)
@@ -38,6 +45,7 @@ class AlertListViewController < UIViewController
 
     Dispatch::Queue.concurrent.async do
       @alerts = APIClient.get_alerts
+
       if @alerts.nil?
         alert = UIAlertController.alertControllerWithTitle('Error',
           message: 'Unable to load alerts, please check your internet connection.',
@@ -47,6 +55,7 @@ class AlertListViewController < UIViewController
         @alerts = []
       end
 
+      apply_filter
       Dispatch::Queue.main.async do
         @first_load = false
         UIApplication.sharedApplication.networkActivityIndicatorVisible = false
@@ -56,26 +65,56 @@ class AlertListViewController < UIViewController
     end
   end
 
+  def filter(sender)
+    @filter_vc.modalPresentationStyle = UIModalPresentationPopover
+
+    popover = @filter_vc.popoverPresentationController
+    popover.delegate = self
+    popover.sourceView = self.view
+    popover.sourceRect = self.view.bounds
+    popover.permittedArrowDirections = UIPopoverArrowDirectionDown
+
+    presentViewController(@filter_vc, animated: true, completion: nil)
+  end
+
+  def adaptivePresentationStyleForPresentationController(controller, traitCollection: traits)
+    UIModalPresentationOverFullScreen if traits.horizontalSizeClass == UIUserInterfaceSizeClassCompact
+  end
+
+  def presentationController(controller, viewControllerForAdaptivePresentationStyle: style)
+    return nil if style != UIModalPresentationOverFullScreen
+    UINavigationController.alloc.initWithRootViewController(controller.presentedViewController)
+  end
+
+  def done_filtering
+    dismissViewControllerAnimated(true, completion: nil)
+  end
+
+  def filter_updated(list)
+    @filter_list = list
+    apply_filter
+  end
+
   def numberOfSectionsInTableView(table)
     1
   end
 
   def tableView(table, numberOfRowsInSection: section)
     return 0 if @first_load
-    [1, @alerts.count].max
+    [1, @filtered.count].max
   end
 
   def tableView(table, cellForRowAtIndexPath: path)
-    cell = table.dequeueReusableCellWithIdentifier(@empty_reuse)
-    cell = UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: @empty_reuse) if cell.nil?
+    cell = table.dequeueReusableCellWithIdentifier(@reuse)
+    cell = UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: @reuse) if cell.nil?
     cell.textLabel.numberOfLines = 0
     cell.textLabel.color = UIColor.blackColor
 
-    if @alerts.count == 0
+    if @filtered.count == 0
       cell.textLabel.text = 'No alerts'
       cell.selectionStyle = UITableViewCellSelectionStyleNone
     else
-      alert = @alerts[path.row]
+      alert = @filtered[path.row]
       text = mutable_attr_string(alert.description.strip)
       text.appendAttributedString(attr_string("\n\nWhen: " + alert.start_string + ' - ' + alert.end_string))
       text.appendAttributedString(attr_string("\nAffects:"))
@@ -93,8 +132,8 @@ class AlertListViewController < UIViewController
   end
 
   def tableView(table, didSelectRowAtIndexPath: path)
-    return if @alerts.nil? || @alerts.count == 0
-    url = NSURL.URLWithString(@alerts[path.row].url)
+    return if @filtered.count == 0
+    url = NSURL.URLWithString(@filtered[path.row].url)
     safari = SFSafariViewController.alloc.initWithURL(url)
     presentViewController(safari, animated: true, completion: nil)
   end
@@ -119,5 +158,14 @@ class AlertListViewController < UIViewController
     return ' ' if index == 0
     return ' and ' if index == total - 1
     return ', '
+  end
+
+  def apply_filter
+    @filtered = @alerts.select do |alert|
+      alert.services.any? do |service|
+        service.passes_filter?(@filter_list)
+      end
+    end
+    @table.reloadData
   end
 end

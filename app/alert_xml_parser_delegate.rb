@@ -40,6 +40,8 @@ class AlertXMLParserDelegate
       @alert.end_append(string)
     when 'ServiceName'
       @service.name_append(string)
+    when 'ServiceId'
+      @service.id_append(string)
     when 'ServiceTypeDescription'
       @service.type_append(string)
     when 'ServiceBackColor'
