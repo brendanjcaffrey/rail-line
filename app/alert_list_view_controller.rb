@@ -5,6 +5,7 @@ class AlertListViewController < UIViewController
     @alerts = []
     @filtered = []
     @filter_list = Colors.route_colors.keys
+    @num_possible_filters = Colors.route_colors.keys.count
     @reuse = 'AlertCell'
 
     @layout = AlertListLayout.new
@@ -30,9 +31,9 @@ class AlertListViewController < UIViewController
     @small_font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize)
 
     @filter_vc = AlertFilterViewController.alloc.init_with_delegate(self)
-    button = UIBarButtonItem.alloc.initWithTitle('Filter', style: UIBarButtonItemStylePlain,
+    @filter_button = UIBarButtonItem.alloc.initWithTitle('Filter', style: UIBarButtonItemStylePlain,
       target: self, action: 'filter:')
-    navigationItem.setRightBarButtonItem(button, animated: false)
+    navigationItem.setRightBarButtonItem(@filter_button, animated: false)
   end
 
   def viewWillAppear(animated)
@@ -93,6 +94,12 @@ class AlertListViewController < UIViewController
   def filter_updated(list)
     @filter_list = list
     apply_filter
+
+    text = 'Filter'
+    if @filter_list.count != @num_possible_filters
+      text += ' (' + @filter_list.count.to_s + ')'
+    end
+    @filter_button.title = text
   end
 
   def numberOfSectionsInTableView(table)

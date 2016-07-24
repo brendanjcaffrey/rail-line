@@ -22,11 +22,21 @@ class AlertFilterViewController < UIViewController
       button = UIBarButtonItem.alloc.initWithTitle('Done', style: UIBarButtonItemStylePlain,
         target: self, action: 'done:')
       navigationItem.setRightBarButtonItem(button, animated: false)
+
+      button = UIBarButtonItem.alloc.initWithTitle('None', style: UIBarButtonItemStylePlain,
+        target: self, action: 'none:')
+      navigationItem.setLeftBarButtonItem(button, animated: false)
     end
   end
 
   def done(target)
     @delegate.done_filtering
+  end
+
+  def none(target)
+    @selected = [false] * @selected.count
+    selected_rows_updated
+    @table.reloadData
   end
 
   def numberOfSectionsInTableView(table)
@@ -54,6 +64,16 @@ class AlertFilterViewController < UIViewController
     table.cellForRowAtIndexPath(path).accessoryType = accessory_type_for_path(path)
     table.deselectRowAtIndexPath(path, animated: true)
 
+    selected_rows_updated
+  end
+
+  private
+
+  def accessory_type_for_path(path)
+    @selected[path.row] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone
+  end
+
+  def selected_rows_updated
     selected = []
     (0..@selected.count).each do |index|
       selected << @routes[index] if @selected[index]
@@ -61,11 +81,5 @@ class AlertFilterViewController < UIViewController
 
     selected = selected.empty? ? @routes : selected
     @delegate.filter_updated(selected)
-  end
-
-  private
-
-  def accessory_type_for_path(path)
-    @selected[path.row] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone
   end
 end
