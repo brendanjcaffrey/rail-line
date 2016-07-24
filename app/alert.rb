@@ -37,6 +37,10 @@ class Alert
   end
 
   def start_string
+    # if we're in the middle of the alert time window, make the start 'Now'
+    now = NSDate.date
+    return 'Now' if start_nsdate <= now && end_nsdate >= now
+
     convert_to_string(start_nsdate, @start.length, 'Now')
   end
 

@@ -95,6 +95,7 @@ class AlertListViewController < UIViewController
     @filter_list = list
     apply_filter
 
+    # update button text to show the number of selected filters
     text = 'Filter'
     if @filter_list.count != @num_possible_filters
       text += ' (' + @filter_list.count.to_s + ')'
