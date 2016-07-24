@@ -28,8 +28,8 @@ class Settings
   end
 
   def self.update_list(list)
-    # update the 3D touch app shortcuts with up to the four stations (reverse so A is at top, Z is at bottom)
-    shortcuts = list[0..3].reverse.map do |id|
+    # update the 3D touch app shortcuts with up to the four stations (which is the max iOS allows)
+    shortcuts = list[0..3].map do |id|
       station = CTAInfo.stations[id]
       icon = UIApplicationShortcutIcon.iconWithType(UIApplicationShortcutIconTypeFavorite)
       UIApplicationShortcutItem.alloc.initWithType(id.to_s, localizedTitle: station.name,
