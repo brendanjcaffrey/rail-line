@@ -11,7 +11,7 @@ class AlertFilterViewController < UIViewController
     @selected = [false] * @routes.size
     @reuse = 'AlertFilterCell'
 
-    @layout = AlertFilterLayout.new
+    @layout = TableLayout.new
     self.view = @layout.view
     @table = @layout.table
     @table.delegate = @table.dataSource = self

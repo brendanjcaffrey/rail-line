@@ -1,4 +1,4 @@
-class AlertFilterLayout < MK::Layout
+class TableLayout < MK::Layout
   include LayoutConstraintHelper
   view :table
 

@@ -28,6 +28,9 @@ class StationListViewController < UIViewController
     button = UIBarButtonItem.alloc.initWithTitle('Alerts', style: UIBarButtonItemStylePlain,
       target: self, action: 'alerts:')
     navigationItem.setRightBarButtonItem(button, animated: false)
+    button = UIBarButtonItem.alloc.initWithTitle('Map', style: UIBarButtonItemStylePlain,
+      target: self, action: 'map:')
+    navigationItem.setLeftBarButtonItem(button, animated: false)
   end
 
   def viewDidLoad
@@ -117,7 +120,13 @@ class StationListViewController < UIViewController
   end
 
   def alerts(sender)
-    navigationController.pushViewController(AlertListViewController.alloc.init, animated: true)
+    alert = AlertListViewController.alloc.init
+    navigationController.pushViewController(alert, animated: true)
+  end
+
+  def map(sender)
+    map = MapLineSelectionController.alloc.init_with_eta_delegate(self)
+    navigationController.pushViewController(map, animated: true)
   end
 
   def force_show(stop_id)
