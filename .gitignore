@@ -18,3 +18,4 @@ nbproject
 .idea
 .dat*.*
 *.mobileprovision
+vendor/*/build*
