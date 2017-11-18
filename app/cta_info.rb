@@ -2,7 +2,7 @@ Station = Struct.new(:id, :name, :title, :subtitle, :latitude, :longitude, :red,
 class CTAInfo
   class << self ; attr_reader :stations ; end
 
-  # last updated 07-24-2016
+  # last updated 11-17-2017
   @stations = {
     40830 => Station.new(40830, "18th", "18th", "Pink Line", 41.857908, -87.669147, false, false, false, false, false, false, true, false),
     41120 => Station.new(41120, "35th-Bronzeville-IIT", "35th-Bronzeville-IIT", "Green Line", 41.831677, -87.625826, false, false, false, true, false, false, false, false),
@@ -102,7 +102,6 @@ class CTAInfo
     41050 => Station.new(41050, "Linden", "Linden", "Purple Line", 42.073153, -87.69073, false, false, false, false, false, true, false, false),
     41020 => Station.new(41020, "Logan Square", "Logan Square", "Blue Line", 41.929728, -87.708541, false, true, false, false, false, false, false, false),
     41300 => Station.new(41300, "Loyola", "Loyola", "Red Line", 42.001073, -87.661061, true, false, false, false, false, false, false, false),
-    40640 => Station.new(40640, "Madison/Wabash", "Madison/Wabash", "Brown, Green, Orange, Pink & Purple Lines", 41.882023, -87.626098, false, false, true, true, true, true, true, false),
     40270 => Station.new(40270, "Main", "Main", "Purple Line", 42.033456, -87.679538, false, false, false, false, false, true, false, false),
     40460 => Station.new(40460, "Merchandise Mart", "Merchandise Mart", "Brown & Purple Lines", 41.888969, -87.633924, false, false, true, false, false, true, false, false),
     40930 => Station.new(40930, "Midway", "Midway", "Orange Line", 41.78661, -87.737875, false, false, false, false, true, false, false, false),
@@ -126,7 +125,6 @@ class CTAInfo
     40150 => Station.new(40150, "Pulaski (Pink Line)", "Pulaski", "Pink Line", 41.853732, -87.724311, false, false, false, false, false, false, true, false),
     40040 => Station.new(40040, "Quincy/Wells", "Quincy/Wells", "Brown, Orange, Purple & Pink Lines", 41.878723, -87.63374, false, false, true, false, true, true, true, false),
     40470 => Station.new(40470, "Racine", "Racine", "Blue Line", 41.87592, -87.659458, false, true, false, false, false, false, false, false),
-    40200 => Station.new(40200, "Randolph/Wabash", "Randolph/Wabash", "Brown, Green, Orange, Pink & Purple Lines", 41.884431, -87.626149, false, false, true, true, true, true, true, false),
     40610 => Station.new(40610, "Ridgeland", "Ridgeland", "Green Line", 41.887159, -87.783661, false, false, false, true, false, false, false, false),
     41010 => Station.new(41010, "Rockwell", "Rockwell", "Brown Line", 41.966115, -87.6941, false, false, true, false, false, false, false, false),
     41400 => Station.new(41400, "Roosevelt", "Roosevelt", "Red, Orange & Green Lines", 41.867405, -87.62659, true, false, false, true, true, false, false, false),
@@ -140,6 +138,7 @@ class CTAInfo
     40880 => Station.new(40880, "Thorndale", "Thorndale", "Red Line", 41.990259, -87.659076, true, false, false, false, false, false, false, false),
     40350 => Station.new(40350, "UIC-Halsted", "UIC-Halsted", "Blue Line", 41.875474, -87.649707, false, true, false, false, false, false, false, false),
     40370 => Station.new(40370, "Washington", "Washington", "Blue Line", 41.883164, -87.62944, false, true, false, false, false, false, false, false),
+    41700 => Station.new(41700, "Washington/Wabash", "Washington/Wabash", "Brown, Green, Orange, Purple & Pink Lines", 41.88322, -87.626189, false, false, true, true, true, true, true, false),
     40730 => Station.new(40730, "Washington/Wells", "Washington/Wells", "Brown, Orange, Purple & Pink Lines", 41.882695, -87.63378, false, false, true, false, true, true, true, false),
     41210 => Station.new(41210, "Wellington", "Wellington", "Brown & Purple Lines", 41.936033, -87.653266, false, false, true, false, false, true, false, false),
     40220 => Station.new(40220, "Western (Blue Line - Forest Park Branch)", "Western", "Blue Line", 41.875478, -87.688436, false, true, false, false, false, false, false, false),
