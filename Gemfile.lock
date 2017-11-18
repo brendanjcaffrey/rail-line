@@ -1,11 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    dbt (1.1.5)
-    motion-kit (0.18.0)
-      dbt (~> 1.1.5)
-    motion-launchimages (1.0.0)
-    rake (10.4.2)
+    dbt (1.2.0)
+    motion-kit (1.1.1)
+      dbt (~> 1.1, >= 1.1.5)
+    motion-launchimages (1.1.0)
+    rake (12.3.0)
 
 PLATFORMS
   ruby
@@ -16,4 +16,4 @@ DEPENDENCIES
   rake
 
 BUNDLED WITH
-   1.11.2
+   1.13.7
