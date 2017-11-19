@@ -3,7 +3,7 @@ class StationAnnotation < MKPointAnnotation
 end
 
 class MapController < UIViewController
-  include ControllerConstraintHelper
+  include ManualConstraintHelper
 
   def init_with_stations(stations, line, eta_delegate)
     @stations     = stations
@@ -20,10 +20,22 @@ class MapController < UIViewController
   end
 
   def loadView
-    @layout = MapLayout.new
-    self.view = @layout.view
-    @map = @layout.map
+    super
+
+    @map = MKMapView.new
     @map.delegate = self
+    @map.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(@map)
+    view.backgroundColor = UIColor.whiteColor
+
+    @top_constraint = build_constraint(NSLayoutAttributeTop)
+    @height_constraint = build_constraint(NSLayoutAttributeHeight)
+    left_constraint = build_constraint(NSLayoutAttributeLeft)
+    width_constraint = build_constraint(NSLayoutAttributeWidth)
+    NSLayoutConstraint.activateConstraints([
+      @top_constraint, @height_constraint, left_constraint, width_constraint
+    ])
+
     set_center_point
     add_annotations
   end
