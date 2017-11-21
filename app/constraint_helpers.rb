@@ -73,8 +73,8 @@ module ManualConstraintHelper
   end
 
   def update_constraint
-    @top_constraint.constant = topLayoutGuide.length
-    @height_constraint.constant = -1 * (bottomLayoutGuide.length + topLayoutGuide.length)
+    @top_constraint.constant = topLayoutGuide.length - view.safeAreaInsets.top
+    @height_constraint.constant = -1 * (bottomLayoutGuide.length + topLayoutGuide.length - view.safeAreaInsets.top - view.safeAreaInsets.bottom)
   end
 
   def build_constraint(for_attr)
