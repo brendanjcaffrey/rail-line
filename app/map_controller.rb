@@ -25,6 +25,7 @@ class MapController < UIViewController
     @map = MKMapView.new
     @map.delegate = self
     @map.translatesAutoresizingMaskIntoConstraints = false
+    @map.showsUserLocation = true
     view.addSubview(@map)
     view.backgroundColor = UIColor.whiteColor
 
