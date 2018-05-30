@@ -16,6 +16,8 @@ class MapController < UIViewController
       @color = UIColor.lightGrayColor
     end
 
+    setTitle(line)
+
     init
   end
 
