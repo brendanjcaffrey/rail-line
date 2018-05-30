@@ -5,7 +5,7 @@ module LayoutConstraintHelper
     @extra_bottom_space ||= 0
 
     @top_constraint.equals(controller.topLayoutGuide.length) if controller.topLayoutGuide.length != 0
-    bottom = -1 * (controller.bottomLayoutGuide.length + @extra_bottom_space)
+    bottom = -1 * (controller.bottomLayoutGuide.length + @extra_bottom_space) + self.view.safeAreaInsets.bottom
     @bottom_constraint.equals(bottom)
     self.view.layoutIfNeeded
   end
