@@ -31,10 +31,10 @@ class MapController < UIViewController
     view.addSubview(@map)
     view.backgroundColor = UIColor.whiteColor
 
-    @top_constraint = build_constraint(NSLayoutAttributeTop)
-    @height_constraint = build_constraint(NSLayoutAttributeHeight)
-    left_constraint = build_constraint(NSLayoutAttributeLeft)
-    width_constraint = build_constraint(NSLayoutAttributeWidth)
+    @top_constraint = build_constraint(NSLayoutAttributeTop, @map)
+    @height_constraint = build_constraint(NSLayoutAttributeHeight, @map)
+    left_constraint = build_constraint(NSLayoutAttributeLeft, @map)
+    width_constraint = build_constraint(NSLayoutAttributeWidth, @map)
     NSLayoutConstraint.activateConstraints([
       @top_constraint, @height_constraint, left_constraint, width_constraint
     ])

@@ -77,8 +77,8 @@ module ManualConstraintHelper
     @height_constraint.constant = -1 * (bottomLayoutGuide.length + topLayoutGuide.length - view.safeAreaInsets.top - view.safeAreaInsets.bottom)
   end
 
-  def build_constraint(for_attr)
-    NSLayoutConstraint.constraintWithItem(@map, attribute: for_attr, relatedBy: NSLayoutRelationEqual, toItem: view, attribute: for_attr, multiplier: 1, constant: 0)
+  def build_constraint(for_attr, item)
+    NSLayoutConstraint.constraintWithItem(item, attribute: for_attr, relatedBy: NSLayoutRelationEqual, toItem: view, attribute: for_attr, multiplier: 1, constant: 0)
   end
 end
 
