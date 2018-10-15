@@ -1,21 +1,32 @@
-.repl_history
-build
-tags
-app/pixate_code.rb
-resources/*.nib
-resources/*.momd
-resources/*.storyboardc
-resources/*.psd
-app/secrets.rb
+Rail Line/secrets.swift
 .DS_Store
-nbproject
-.redcar
-#*#
-*~
-*.sw[po]
-.eprj
-.sass-cache
-.idea
-.dat*.*
-*.mobileprovision
-vendor/*/build*
+
+## Build generated
+build/
+DerivedData/
+
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+## Other
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Carthage
+Carthage/Checkouts
+Carthage/Build

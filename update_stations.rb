@@ -30,29 +30,40 @@ doc.css('row').each do |row|
   name_counts[name] += 1
 end
 
-lines = ['Red', 'Blue', 'Brown', 'Green', 'Orange', 'Purple', 'Pink', 'Yellow']
+lines = {'Red' => [], 'Blue' => [], 'Brown' => [], 'Green' => [], 'Orange' => [], 'Purple' => [], 'Pink' => [], 'Yellow' => []}
 stations = id_station_map.values.sort_by { |station| station.desc_name }
-new_file = 'Station = Struct.new(:id, :name, :title, :subtitle, :latitude, :longitude'
-lines.each { |line| new_file << ", :#{line.downcase}" }
+new_file = <<SWIFT
+struct Station {
+    var id: Int
+    var name: String
+    var title: String
+    var subtitle: String
+    var latitude: Double
+    var longitude: Double
+}
 
-new_file << ")
-class CTAInfo
-  class << self ; attr_reader :stations ; end
-
-  # last updated #{Time.now.strftime('%m-%d-%Y')}
-  @stations = {"
-
+class CTA {
+    // last updated #{Time.now.strftime('%m-%d-%Y')}
+    static let stations = [
+SWIFT
 
 stations.each do |station|
   name = name_counts[station.name] > 1 ? station.desc_name : station.name
-  new_file << "\n    #{station.id} => Station.new(#{station.id}, \"#{name}\", \"#{station.name}\", \"#{station.lines}\", #{station.latitude}, #{station.longitude}"
-  lines.each do |line|
-    new_file << ", #{station.desc_name.include?(line) ? 'true' : 'false'}"
+  new_file << "        #{station.id}: Station(id: #{station.id}, name: \"#{name}\", title: \"#{station.name}\", " +
+              "subtitle: \"#{station.lines}\", latitude: #{station.latitude}, longitude: #{station.longitude}),\n"
+
+  lines.each do |line, stations|
+    stations << station.id if station.desc_name.include?(line)
   end
-  new_file << '),'
 end
 
-new_file = new_file[0..-2] # remove the trailing comma
-new_file << "\n  }\nend\n"
+new_file = new_file[0..-3] # remove the trailing comma and new line
+new_file << "\n    ]\n\n"
 
-File.open('app/cta_info.rb', 'w') { |f| f.write(new_file) }
+lines.each do |line, stations|
+  new_file << "    static let #{line.downcase}LineStations = [#{stations.join(', ')}]\n"
+end
+
+new_file << "}\n"
+
+File.open('Rail Line/CTA.swift', 'w') { |f| f.write(new_file) }
