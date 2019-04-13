@@ -84,6 +84,7 @@ class ETAListViewController: UIViewController, UITableViewDataSource, UITableVie
         if etas.isEmpty {
             if let cell = tableView.dequeueReusableCell(withIdentifier: ETAListViewController.emptyIdentifier) {
                 cell.textLabel?.text = "No upcoming arrivals"
+                cell.selectionStyle = .none
                 return cell
             }
         } else {
