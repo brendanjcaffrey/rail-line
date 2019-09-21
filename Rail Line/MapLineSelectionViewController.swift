@@ -58,7 +58,7 @@ class MapLineSelectionViewController: UIViewController, UITableViewDelegate, UIT
         if let cell = tableView.dequeueReusableCell(withIdentifier: MapLineSelectionViewController.reuseIdentifier) {
             if indexPath.section == 0 {
                 cell.textLabel?.text = "All"
-                cell.textLabel?.textColor = Colors.black
+                cell.textLabel?.textColor = Colors.allText
             } else {
                 cell.textLabel?.text = Routes.names[indexPath.row]
                 cell.textLabel?.textColor = Routes.colors[Routes.names[indexPath.row]]

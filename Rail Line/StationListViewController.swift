@@ -22,7 +22,7 @@ class StationListViewController: UIViewController, UITableViewDataSource, UITabl
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
 
-        view.backgroundColor = Colors.white
+        view.backgroundColor = Colors.stationListBackground
         searchController.searchBar.tintColor = Colors.cyan
         tableView.tintColor = Colors.cyan
 

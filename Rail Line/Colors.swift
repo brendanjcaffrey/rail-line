@@ -6,4 +6,6 @@ class Colors {
     static let white = UIColor.white
     static let black = UIColor.black
     static let lightGray = UIColor.lightGray
+    static let allText = UIColor(named: "AllText")!
+    static let stationListBackground = UIColor(named: "StationListBackground")!
 }
