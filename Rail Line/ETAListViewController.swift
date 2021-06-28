@@ -1,7 +1,7 @@
 import UIKit
 import IoniconsKit
 
-protocol SettingsChangedDelegate: class {
+protocol SettingsChangedDelegate: AnyObject {
     func settingsChanged()
 }
 

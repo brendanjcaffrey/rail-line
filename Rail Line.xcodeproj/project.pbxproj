@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,18 +19,35 @@
 		C618D53C2159C30100720543 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C618D53B2159C30000720543 /* Routes.swift */; };
 		C61A973A2166D19700F2CFFD /* MapLineSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A97392166D19700F2CFFD /* MapLineSelectionViewController.swift */; };
 		C61A973C2166D99E00F2CFFD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A973B2166D99E00F2CFFD /* MapViewController.swift */; };
+		C61AAB84268A654E005E14F4 /* IoniconsKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61AAB83268A654E005E14F4 /* IoniconsKit.xcframework */; };
+		C61AAB85268A654E005E14F4 /* IoniconsKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C61AAB83268A654E005E14F4 /* IoniconsKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C61AAB88268A6550005E14F4 /* SnapKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61AAB87268A6550005E14F4 /* SnapKit.xcframework */; };
+		C61AAB89268A6550005E14F4 /* SnapKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C61AAB87268A6550005E14F4 /* SnapKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C64276D721744C490099BAE9 /* ETACell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64276D621744C490099BAE9 /* ETACell.swift */; };
 		C679F89D21681DA200D28682 /* AlertsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C679F89C21681DA200D28682 /* AlertsListViewController.swift */; };
 		C679F89F21682DBB00D28682 /* AlertsFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C679F89E21682DBB00D28682 /* AlertsFilterViewController.swift */; };
 		C68CE21E21569DFF00766F75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68CE21D21569DFF00766F75 /* AppDelegate.swift */; };
 		C68CE22821569E0100766F75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C68CE22721569E0100766F75 /* Assets.xcassets */; };
 		C68CE22B21569E0100766F75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C68CE22921569E0100766F75 /* LaunchScreen.storyboard */; };
-		C6B7A93D215B13B2007560CF /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6B7A93B215B13B2007560CF /* SnapKit.framework */; };
-		C6B7A93E215B13B2007560CF /* IoniconsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6B7A93C215B13B2007560CF /* IoniconsKit.framework */; };
 		C6CF11B22166F25C0010E167 /* AlertsXMLParserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF11B12166F25C0010E167 /* AlertsXMLParserDelegate.swift */; };
 		C6CF11B42166F3310010E167 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF11B32166F3310010E167 /* Alert.swift */; };
 		C6CF11B62166F3770010E167 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF11B52166F3770010E167 /* Service.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C61AAB86268A654E005E14F4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C61AAB89268A6550005E14F4 /* SnapKit.xcframework in Embed Frameworks */,
+				C61AAB85268A654E005E14F4 /* IoniconsKit.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C618D5192156A5AE00720543 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -45,6 +62,8 @@
 		C618D53B2159C30000720543 /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		C61A97392166D19700F2CFFD /* MapLineSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLineSelectionViewController.swift; sourceTree = "<group>"; };
 		C61A973B2166D99E00F2CFFD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		C61AAB83268A654E005E14F4 /* IoniconsKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IoniconsKit.xcframework; path = Carthage/Build/IoniconsKit.xcframework; sourceTree = "<group>"; };
+		C61AAB87268A6550005E14F4 /* SnapKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SnapKit.xcframework; path = Carthage/Build/SnapKit.xcframework; sourceTree = "<group>"; };
 		C64276D621744C490099BAE9 /* ETACell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETACell.swift; sourceTree = "<group>"; };
 		C679F89C21681DA200D28682 /* AlertsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsListViewController.swift; sourceTree = "<group>"; };
 		C679F89E21682DBB00D28682 /* AlertsFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsFilterViewController.swift; sourceTree = "<group>"; };
@@ -53,8 +72,6 @@
 		C68CE22721569E0100766F75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C68CE22A21569E0100766F75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C68CE22C21569E0100766F75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C6B7A93B215B13B2007560CF /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
-		C6B7A93C215B13B2007560CF /* IoniconsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IoniconsKit.framework; path = Carthage/Build/iOS/IoniconsKit.framework; sourceTree = "<group>"; };
 		C6CF11B12166F25C0010E167 /* AlertsXMLParserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsXMLParserDelegate.swift; sourceTree = "<group>"; };
 		C6CF11B32166F3310010E167 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C6CF11B52166F3770010E167 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -65,8 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6B7A93E215B13B2007560CF /* IoniconsKit.framework in Frameworks */,
-				C6B7A93D215B13B2007560CF /* SnapKit.framework in Frameworks */,
+				C61AAB88268A6550005E14F4 /* SnapKit.xcframework in Frameworks */,
+				C61AAB84268A654E005E14F4 /* IoniconsKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +93,8 @@
 		C618D52D2158337400720543 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C6B7A93C215B13B2007560CF /* IoniconsKit.framework */,
-				C6B7A93B215B13B2007560CF /* SnapKit.framework */,
+				C61AAB87268A6550005E14F4 /* SnapKit.xcframework */,
+				C61AAB83268A654E005E14F4 /* IoniconsKit.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -136,10 +153,10 @@
 			buildConfigurationList = C68CE22F21569E0100766F75 /* Build configuration list for PBXNativeTarget "Rail Line" */;
 			buildPhases = (
 				C68CE21621569DFF00766F75 /* Sources */,
-				C618D5302158338800720543 /* ShellScript */,
 				C68CE21721569DFF00766F75 /* Frameworks */,
 				C68CE21821569DFF00766F75 /* Resources */,
-				C61A973D2166EA7700F2CFFD /* ShellScript */,
+				C61A973D2166EA7700F2CFFD /* Run Script */,
+				C61AAB86268A654E005E14F4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -157,7 +174,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = jcaffrey;
 				TargetAttributes = {
 					C68CE21921569DFF00766F75 = {
@@ -197,28 +214,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C618D5302158338800720543 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/IoniconsKit.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SnapKit.framework",
-				"$(DERIVED_FILE_DIR)/$(FRAMEWORKS_FOLDER_PATH)/IoniconsKit.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-		C61A973D2166EA7700F2CFFD /* ShellScript */ = {
+		C61A973D2166EA7700F2CFFD /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -227,13 +223,14 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -304,6 +301,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -365,6 +363,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -400,10 +399,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JD9296YG3D;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = "Rail Line/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -422,10 +417,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JD9296YG3D;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = "Rail Line/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

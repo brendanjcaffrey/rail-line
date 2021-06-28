@@ -1,6 +1,6 @@
 import UIKit
 
-protocol FilterChangedDelegate: class {
+protocol FilterChangedDelegate: AnyObject {
     func filterChanged(selectedRoutes: Set<String>)
 }
 
