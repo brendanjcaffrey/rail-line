@@ -21,7 +21,7 @@ class AlertsListViewController: UIViewController, UITableViewDataSource, UITable
         super.viewDidLoad()
         title = "Alerts"
 
-        view.backgroundColor = Colors.white
+        view.backgroundColor = UIColor.systemBackground
         view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -106,8 +106,6 @@ class AlertsListViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     private func refresh() {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
 
@@ -116,7 +114,6 @@ class AlertsListViewController: UIViewController, UITableViewDataSource, UITable
 
             DispatchQueue.main.async { [weak self] in
                 self?.firstLoad = false
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self?.tableView.reloadData()
                 self?.refreshControl.endRefreshing()
             }

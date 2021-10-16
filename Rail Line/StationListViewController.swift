@@ -22,7 +22,7 @@ class StationListViewController: UIViewController, UITableViewDataSource, UITabl
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
 
-        view.backgroundColor = Colors.stationListBackground
+        view.backgroundColor = UIColor.systemBackground
         searchController.searchBar.tintColor = Colors.cyan
         tableView.tintColor = Colors.cyan
 
@@ -61,9 +61,6 @@ class StationListViewController: UIViewController, UITableViewDataSource, UITabl
         if let path = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: path, animated: true)
         }
-
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.largeTitleDisplayMode = .always
     }
 
     func forceShow(_ stationId: Int) {

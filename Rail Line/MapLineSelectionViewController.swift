@@ -29,7 +29,7 @@ class MapLineSelectionViewController: UIViewController, UITableViewDelegate, UIT
 
         manager.requestWhenInUseAuthorization()
 
-        navigationController!.view.backgroundColor = Colors.white
+        navigationController!.view.backgroundColor = UIColor.systemBackground
         navigationController!.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
 
@@ -58,7 +58,7 @@ class MapLineSelectionViewController: UIViewController, UITableViewDelegate, UIT
         if let cell = tableView.dequeueReusableCell(withIdentifier: MapLineSelectionViewController.reuseIdentifier) {
             if indexPath.section == 0 {
                 cell.textLabel?.text = "All"
-                cell.textLabel?.textColor = Colors.allText
+                cell.textLabel?.textColor = UIColor.label
             } else {
                 cell.textLabel?.text = Routes.names[indexPath.row]
                 cell.textLabel?.textColor = Routes.colors[Routes.names[indexPath.row]]

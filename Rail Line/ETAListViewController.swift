@@ -31,7 +31,7 @@ class ETAListViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         title = station.name
 
-        view.backgroundColor = Colors.white
+        view.backgroundColor = UIColor.systemBackground
         view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -106,7 +106,6 @@ class ETAListViewController: UIViewController, UITableViewDataSource, UITableVie
         let button = UIButton(type: .custom)
         button.setImage(image, for: .normal)
         button.setImage(highlightImage, for: .highlighted)
-        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: -5)
         button.addTarget(self, action: #selector(toggle(_:)), for: .touchUpInside)
 
         let barButton = UIBarButtonItem(customView: button)
@@ -120,8 +119,6 @@ class ETAListViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     private func refresh() {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
 
@@ -129,7 +126,6 @@ class ETAListViewController: UIViewController, UITableViewDataSource, UITableVie
 
             DispatchQueue.main.async { [weak self] in
                 self?.firstLoad = false
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self?.tableView.reloadData()
                 self?.refreshControl.endRefreshing()
             }

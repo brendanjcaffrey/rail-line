@@ -12,7 +12,7 @@ class AlertsFilterViewController: UIViewController, UITableViewDataSource, UITab
     private static let reuseIdentifier = "AlertsFilterViewControllerCell"
 
     override func viewDidLoad() {
-        view.backgroundColor = Colors.white
+        view.backgroundColor = UIColor.systemBackground
         view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)

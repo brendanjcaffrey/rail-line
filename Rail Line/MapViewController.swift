@@ -17,7 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     init(route: String, delegate: SettingsChangedDelegate) {
         self.route = route
         self.stations = Routes.getRouteStations(route).map { CTA.stations[$0]! }
-        self.color = Routes.colors[route] ?? Colors.lightGray
+        self.color = Routes.colors[route] ?? UIColor.systemGray
         self.delegate = delegate
 
         super.init(nibName: nil, bundle: nil)

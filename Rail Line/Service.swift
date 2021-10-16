@@ -22,10 +22,10 @@ class Service {
     }
 
     func getColor() -> UIColor {
-        if color.count != 6 { return Colors.black }
+        if color.count != 6 { return UIColor.label }
 
-        var rgbValue: UInt32 = 0
-        Scanner(string: color).scanHexInt32(&rgbValue)
+        var rgbValue: UInt64 = 0
+        Scanner(string: color).scanHexInt64(&rgbValue)
 
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)
         let green = CGFloat((rgbValue & 0x00FF00) >> 8)
