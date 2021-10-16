@@ -3,7 +3,7 @@ import UIKit
 class ArrivalXMLParserDelegate: UIViewController, XMLParserDelegate {
     private var last: String = ""
     private var eta: ETA?
-    var etas: [ETA] = []
+    private var etas: [ETA] = []
 
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String] = [:]) {
         last = elementName
@@ -23,5 +23,11 @@ class ArrivalXMLParserDelegate: UIViewController, XMLParserDelegate {
         case "prdt":   eta?.prdAppend(string)
         default:       break
         }
+    }
+
+    func getAllETAs() -> [ETA] {
+        if let eta = eta { etas.append(eta) }
+        eta = nil
+        return etas
     }
 }

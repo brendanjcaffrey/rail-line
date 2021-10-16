@@ -8,7 +8,7 @@ class APIClient {
         parser!.delegate = delegate
         parser!.parse()
 
-        return delegate.etas.sorted(by: { $0 < $1 })
+        return delegate.getAllETAs().sorted(by: { $0 < $1 })
     }
 
     static func getAlerts() -> [Alert] {
