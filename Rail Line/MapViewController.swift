@@ -34,7 +34,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         title = route + (Routes.colors[route] != nil ? " Line" : " Lines")
         view.addSubview(mapView)
-        mapView.snp.makeConstraints { (make) -> Void in
+        mapView.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.bottom.equalTo(self.additionalSafeAreaInsets.bottom)
             make.width.equalTo(self.view.snp.width)

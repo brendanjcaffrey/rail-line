@@ -20,17 +20,17 @@ class ETACell: UITableViewCell {
         addSubview(destinationLabel)
         addSubview(timeLabel)
 
-        colorBlock.snp.makeConstraints { (make) -> Void in
+        colorBlock.snp.makeConstraints { (make) in
             make.top.equalTo(0)
             make.width.equalTo(ETACell.colorWidth)
             make.height.equalTo(ETACell.colorHeight)
             make.left.equalTo(self.snp.left)
         }
-        destinationLabel.snp.makeConstraints { (make) -> Void in
+        destinationLabel.snp.makeConstraints { (make) in
             make.height.equalTo(ETACell.cellHeight)
             make.left.equalTo(colorBlock.snp.right).offset(ETACell.spacing)
         }
-        timeLabel.snp.makeConstraints { (make) -> Void in
+        timeLabel.snp.makeConstraints { (make) in
             make.height.equalTo(ETACell.cellHeight)
             make.right.equalTo(self.snp.right).offset(-1 * ETACell.spacing)
             make.left.equalTo(destinationLabel.snp.right)

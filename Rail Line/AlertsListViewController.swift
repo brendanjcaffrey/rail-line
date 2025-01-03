@@ -23,7 +23,7 @@ class AlertsListViewController: UIViewController, UITableViewDataSource, UITable
 
         view.backgroundColor = UIColor.systemBackground
         view.addSubview(tableView)
-        tableView.snp.makeConstraints { (make) -> Void in
+        tableView.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.bottom.equalTo(self.additionalSafeAreaInsets.bottom)
             make.width.equalTo(self.view.snp.width)
