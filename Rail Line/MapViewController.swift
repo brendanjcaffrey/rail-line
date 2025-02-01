@@ -30,7 +30,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         mapView.delegate = self
         mapView.showsUserLocation = true
-        mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MapViewController.reuseIdentifier)
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: MapViewController.reuseIdentifier)
 
         title = route + (Routes.colors[route] != nil ? " Line" : " Lines")
         view.addSubview(mapView)
@@ -49,7 +49,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         if let pinView = mapView.dequeueReusableAnnotationView(withIdentifier: MapViewController.reuseIdentifier) {
             pinView.annotation = annotation
-            (pinView as? MKPinAnnotationView)?.pinTintColor = color
+            (pinView as? MKMarkerAnnotationView)?.markerTintColor = color
             pinView.canShowCallout = true
             pinView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             return pinView

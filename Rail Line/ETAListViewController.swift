@@ -1,5 +1,4 @@
 import UIKit
-import IoniconsKit
 
 protocol SettingsChangedDelegate: AnyObject {
     func settingsChanged()
@@ -97,11 +96,9 @@ class ETAListViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     private func updateStarButton() {
-        let icon = Settings.isFavorited(station.id) ? Ionicons.iosStar : Ionicons.iosStarOutline
-        let sizeDim = 25
-        let size = CGSize(width: sizeDim, height: sizeDim)
-        let image = UIImage.ionicon(with: icon, textColor: Colors.cyan, size: size)
-        let highlightImage = UIImage.ionicon(with: icon, textColor: Colors.fadedCyan, size: size)
+        let icon = Settings.isFavorited(station.id) ? "star.fill" : "star"
+        let image = UIImage.init(systemName: icon)?.withTintColor(Colors.cyan, renderingMode: .alwaysOriginal)
+        let highlightImage = UIImage.init(systemName: icon)?.withTintColor(Colors.fadedCyan, renderingMode: .alwaysOriginal)
 
         let button = UIButton(type: .custom)
         button.setImage(image, for: .normal)

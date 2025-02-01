@@ -19,10 +19,6 @@
 		C618D53C2159C30100720543 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C618D53B2159C30000720543 /* Routes.swift */; };
 		C61A973A2166D19700F2CFFD /* MapLineSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A97392166D19700F2CFFD /* MapLineSelectionViewController.swift */; };
 		C61A973C2166D99E00F2CFFD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A973B2166D99E00F2CFFD /* MapViewController.swift */; };
-		C61AAB84268A654E005E14F4 /* IoniconsKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61AAB83268A654E005E14F4 /* IoniconsKit.xcframework */; };
-		C61AAB85268A654E005E14F4 /* IoniconsKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C61AAB83268A654E005E14F4 /* IoniconsKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C61AAB88268A6550005E14F4 /* SnapKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C61AAB87268A6550005E14F4 /* SnapKit.xcframework */; };
-		C61AAB89268A6550005E14F4 /* SnapKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C61AAB87268A6550005E14F4 /* SnapKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C64276D721744C490099BAE9 /* ETACell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64276D621744C490099BAE9 /* ETACell.swift */; };
 		C679F89D21681DA200D28682 /* AlertsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C679F89C21681DA200D28682 /* AlertsListViewController.swift */; };
 		C679F89F21682DBB00D28682 /* AlertsFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C679F89E21682DBB00D28682 /* AlertsFilterViewController.swift */; };
@@ -32,6 +28,7 @@
 		C6CF11B22166F25C0010E167 /* AlertsXMLParserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF11B12166F25C0010E167 /* AlertsXMLParserDelegate.swift */; };
 		C6CF11B42166F3310010E167 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF11B32166F3310010E167 /* Alert.swift */; };
 		C6CF11B62166F3770010E167 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF11B52166F3770010E167 /* Service.swift */; };
+		C6DE3AA82D4DC56B00AFD6BA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C6DE3AA72D4DC56B00AFD6BA /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,8 +38,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C61AAB89268A6550005E14F4 /* SnapKit.xcframework in Embed Frameworks */,
-				C61AAB85268A654E005E14F4 /* IoniconsKit.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,8 +57,6 @@
 		C618D53B2159C30000720543 /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		C61A97392166D19700F2CFFD /* MapLineSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLineSelectionViewController.swift; sourceTree = "<group>"; };
 		C61A973B2166D99E00F2CFFD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		C61AAB83268A654E005E14F4 /* IoniconsKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IoniconsKit.xcframework; path = Carthage/Build/IoniconsKit.xcframework; sourceTree = "<group>"; };
-		C61AAB87268A6550005E14F4 /* SnapKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SnapKit.xcframework; path = Carthage/Build/SnapKit.xcframework; sourceTree = "<group>"; };
 		C64276D621744C490099BAE9 /* ETACell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETACell.swift; sourceTree = "<group>"; };
 		C679F89C21681DA200D28682 /* AlertsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsListViewController.swift; sourceTree = "<group>"; };
 		C679F89E21682DBB00D28682 /* AlertsFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsFilterViewController.swift; sourceTree = "<group>"; };
@@ -82,8 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C61AAB88268A6550005E14F4 /* SnapKit.xcframework in Frameworks */,
-				C61AAB84268A654E005E14F4 /* IoniconsKit.xcframework in Frameworks */,
+				C6DE3AA82D4DC56B00AFD6BA /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,8 +85,6 @@
 		C618D52D2158337400720543 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C61AAB87268A6550005E14F4 /* SnapKit.xcframework */,
-				C61AAB83268A654E005E14F4 /* IoniconsKit.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,6 +183,9 @@
 				Base,
 			);
 			mainGroup = C68CE21121569DFF00766F75;
+			packageReferences = (
+				C6DE3AA62D4DC56B00AFD6BA /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = C68CE21B21569DFF00766F75 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -467,6 +460,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C6DE3AA62D4DC56B00AFD6BA /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C6DE3AA72D4DC56B00AFD6BA /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6DE3AA62D4DC56B00AFD6BA /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C68CE21221569DFF00766F75 /* Project object */;
 }
