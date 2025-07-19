@@ -1,28 +1,49 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'uri'
-require 'nokogiri'
+require 'json'
+require 'joined'
+
+line_ids = { 'red' => 'Red',
+             'blue' => 'Blue',
+             'brn' => 'Brown',
+             'g' => 'Green',
+             'o' => 'Orange',
+             'p' => 'Purple',
+             'pnk' => 'Pink',
+             'y' => 'Yellow',
+             'pexp' => 'Purple Express' }
 
 `open https://data.cityofchicago.org/Transportation/CTA-System-Information-List-of-L-Stops/8pix-ypme`
-print 'Enter XML file URL (from Export): ' ; STDOUT.flush
+print 'Enter XML file URL (from Export > API endpoint > JSON): '
+$stdout.flush
 
-file = STDIN.gets.chomp
+file = $stdin.gets.chomp
 contents = Net::HTTP.get(URI.parse(file))
-doc = Nokogiri::XML(contents)
+stop_list = JSON.parse(contents)
 
 Station = Struct.new(:id, :name, :desc_name, :lines, :latitude, :longitude)
 id_station_map = {}
 name_counts = {}
 
-doc.css('row').each do |row|
-  id   = row.at_css('map_id').content.to_i
-  next if id_station_map.has_key?(id)
+# NB: a station is made up of multiple stops
+stop_list.each do |row|
+  id = row['map_id']
+  lines = Set.new
+  line_ids.each do |key, value|
+    lines.add(value) if row[key]
+  end
 
-  name = row.at_css('station_name').content
-  desc_name = row.at_css('station_descriptive_name').content
-  lines = desc_name.gsub(/^.+\((.+ Lines?).*\)$/, '\1')
-  location = row.at_css('location')
-  latitude = location['latitude']
-  longitude = location['longitude']
+  if id_station_map.key?(id)
+    id_station_map[id].lines.merge(lines)
+    next
+  end
+
+  name = row['station_name']
+  desc_name = row['station_descriptive_name']
+  latitude = row['location']['latitude']
+  longitude = row['location']['longitude']
   station = Station.new(id, name, desc_name, lines, latitude, longitude)
   id_station_map[id] = station
 
@@ -30,38 +51,45 @@ doc.css('row').each do |row|
   name_counts[name] += 1
 end
 
-lines = {'Red' => [], 'Blue' => [], 'Brown' => [], 'Green' => [], 'Orange' => [], 'Purple' => [], 'Pink' => [], 'Yellow' => []}
-stations = id_station_map.values.sort_by { |station| station.desc_name }
-new_file = <<SWIFT
-struct Station {
-    var id: Int
-    var name: String
-    var title: String
-    var subtitle: String
-    var latitude: Double
-    var longitude: Double
-}
+stations_per_line = line_ids.map { |_k, v| [v, []] }.to_h
+stations = id_station_map.values.sort_by(&:desc_name)
+new_file = <<~SWIFT
+  struct Station {
+      var id: Int
+      var name: String
+      var title: String
+      var subtitle: String
+      var latitude: Double
+      var longitude: Double
+  }
 
-class CTA {
-    // last updated #{Time.now.strftime('%m-%d-%Y')}
-    static let stations = [
+  class CTA {
+      // last updated #{Time.now.strftime('%m-%d-%Y')}
+      static let stations = [
 SWIFT
 
 stations.each do |station|
   name = name_counts[station.name] > 1 ? station.desc_name : station.name
-  new_file << "        #{station.id}: Station(id: #{station.id}, name: \"#{name}\", title: \"#{station.name}\", " +
-              "subtitle: \"#{station.lines}\", latitude: #{station.latitude}, longitude: #{station.longitude}),\n"
+  if station.lines.empty?
+    puts "ERROR: Station #{station.id} (#{name}) has no lines associated with it, skipping"
+    next
+  end
 
-  lines.each do |line, stations|
-    stations << station.id if station.desc_name.include?(line)
+  new_file << "        #{station.id}: Station(id: #{station.id}, name: \"#{name}\", title: \"#{station.name}\", " \
+    "subtitle: \"#{station.lines.to_a.joined(last_word_connector: ' & ')} Line#{station.lines.size > 1 ? 's' : ''}\", " \
+    "latitude: #{station.latitude}, longitude: #{station.longitude}),\n"
+
+  stations_per_line.each do |line, line_stations|
+    line_stations << station.id if station.lines.include?(line)
   end
 end
 
 new_file = new_file[0..-3] # remove the trailing comma and new line
 new_file << "\n    ]\n\n"
 
-lines.each do |line, stations|
-  new_file << "    static let #{line.downcase}LineStations = [#{stations.join(', ')}]\n"
+stations_per_line.each do |line, line_stations|
+  line_str = line.include?(' Express') ? line.downcase.gsub(' e', 'E') : line.downcase
+  new_file << "    static let #{line_str}LineStations = [#{line_stations.join(', ')}]\n"
 end
 
 new_file << "}\n"

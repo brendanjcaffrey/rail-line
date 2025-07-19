@@ -8,7 +8,7 @@ class Routes {
         "Org": "Orange",
         "Pink": "Pink",
         "P": "Purple",
-        "Pexp": "Purple",
+        "Pexp": "Purple Express",
         "Red": "Red",
         "Y": "Yellow"
     ]
@@ -20,6 +20,7 @@ class Routes {
         "Orange": UIColor(red: 249.0 / 255.0, green: 71.0 / 255.0, blue: 28.0 / 255.0, alpha: 1.0),
         "Pink": UIColor(red: 226.0 / 255.0, green: 126.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0),
         "Purple": UIColor(red: 82.0 / 255.0, green: 35.0 / 255.0, blue: 152.0 / 255.0, alpha: 1.0),
+        "Purple Express": UIColor(red: 82.0 / 255.0, green: 35.0 / 255.0, blue: 152.0 / 255.0, alpha: 1.0),
         "Red": UIColor(red: 198.0 / 255.0, green: 12.0 / 255.0, blue: 48.0 / 255.0, alpha: 1.0),
         "Yellow": UIColor(red: 249.0 / 255.0, green: 227.0 / 255.0, blue: 0.0 / 255.0, alpha: 1.0)
     ]
@@ -46,6 +47,7 @@ class Routes {
         case "Purple": return CTA.purpleLineStations
         case "Red": return CTA.redLineStations
         case "Yellow": return CTA.yellowLineStations
+        case "Purple Express": return CTA.purpleExpressLineStations
         default: return Array(CTA.stations.keys)
         }
     }
