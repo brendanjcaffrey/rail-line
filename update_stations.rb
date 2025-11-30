@@ -12,8 +12,7 @@ line_ids = { 'red' => 'Red',
              'o' => 'Orange',
              'p' => 'Purple',
              'pnk' => 'Pink',
-             'y' => 'Yellow',
-             'pexp' => 'Purple Express' }
+             'y' => 'Yellow' }
 
 `open https://data.cityofchicago.org/Transportation/CTA-System-Information-List-of-L-Stops/8pix-ypme`
 print 'Enter XML file URL (from Export > API endpoint > JSON): '
@@ -75,9 +74,9 @@ stations.each do |station|
     next
   end
 
-  new_file << "        #{station.id}: Station(id: #{station.id}, name: \"#{name}\", title: \"#{station.name}\", " \
-    "subtitle: \"#{station.lines.to_a.joined(last_word_connector: ' & ')} Line#{station.lines.size > 1 ? 's' : ''}\", " \
-    "latitude: #{station.latitude}, longitude: #{station.longitude}),\n"
+  new_file << "        #{station.id}: Station(id: #{station.id}, name: \"#{name.gsub('line', 'Line')}\", " \
+    "title: \"#{station.name}\", subtitle: \"#{station.lines.to_a.joined(last_word_connector: ' & ')} " \
+    "Line#{station.lines.size > 1 ? 's' : ''}\", latitude: #{station.latitude}, longitude: #{station.longitude}),\n"
 
   stations_per_line.each do |line, line_stations|
     line_stations << station.id if station.lines.include?(line)
@@ -88,8 +87,7 @@ new_file = new_file[0..-3] # remove the trailing comma and new line
 new_file << "\n    ]\n\n"
 
 stations_per_line.each do |line, line_stations|
-  line_str = line.include?(' Express') ? line.downcase.gsub(' e', 'E') : line.downcase
-  new_file << "    static let #{line_str}LineStations = [#{line_stations.join(', ')}]\n"
+  new_file << "    static let #{line.downcase}LineStations = [#{line_stations.join(', ')}]\n"
 end
 
 new_file << "}\n"
