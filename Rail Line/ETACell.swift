@@ -5,7 +5,7 @@ class ETACell: UITableViewCell {
     private let destinationLabel = UILabel()
     private let timeLabel = UILabel()
 
-    private static let cellHeight = 44
+    private static let cellHeight = 52
     private static let colorSpacing = 1
     private static let colorHeight = cellHeight - colorSpacing
     private static let colorWidth = 20
@@ -22,8 +22,8 @@ class ETACell: UITableViewCell {
 
         colorBlock.snp.makeConstraints { (make) in
             make.top.equalTo(0)
-            make.width.equalTo(ETACell.colorWidth)
             make.height.equalTo(ETACell.colorHeight)
+            make.width.equalTo(ETACell.colorWidth)
             make.left.equalTo(self.snp.left)
         }
         destinationLabel.snp.makeConstraints { (make) in
